@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import Layout from './layout'
+import DataTable from './view/DataTable'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-      <div className='text-blue-700 font-bold'>Hello world</div>
-    </div>
+    <Layout>
+      <DataTable/>
+    </Layout>
   )
 }
 
