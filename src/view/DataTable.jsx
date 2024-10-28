@@ -10,15 +10,31 @@ const DataTable = () => {
     const columns = [
         {
             accessorKey: 'name',
+            header: () => <span>Nombre</span>,
+            cell: info => <span className='font-bold'>{info.getValue()}</span>
         },
         {
             accessorKey: 'lastname',
+            header: () => <span>Apellido</span>
         },
         {
             accessorKey: 'age',
+            header: () => <span>Edad</span>
         },
         {
             accessorKey: 'status',
+            header: () => <span>Estado</span>,
+            cell: info => {
+                return (
+                    <span className={classNames({
+                        'text-white px-2 rounded-full font-semibold' : true ,
+                        'bg-red-500': 'Inactivo' === info.getValue(),
+                        'bg-green-500': 'Activo' === info.getValue(),
+                    })}>
+                        {info.getValue()}
+                    </span>
+                )
+            }
         },
     ]
 
@@ -101,9 +117,19 @@ const DataTable = () => {
                     </button>
                 </div>
                 <div className='text-gray-600 font-semibold'>
-                    Mostrando de 1 a 10 del total de 26 registros
-
+                    Mostrando de {Number(table.getRowModel().rows[0].id) + 1}&nbsp; a {Number(table.getRowModel().rows[table.getRowModel().rows.length - 1].id) + 1}&nbsp; del total de {defaultData.length} registros
                 </div>
+                <select 
+                className='text-gray-600 border border-gray-300 rounded outline-indigo-700'
+                onChange={e => {
+                    table.setPageSize(Number(e.target.value))
+                }}
+                >
+                    <option value="10">10 pag.</option>
+                    <option value="20">20 pag.</option>
+                    <option value="30">30 pag.</option>
+                    <option value="50">50 pag.</option>
+                </select>
             </div>
         </div>
     );
